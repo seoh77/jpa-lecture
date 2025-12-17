@@ -17,13 +17,17 @@ public class JpaMain {
 
         try {
             // 데이터 넣기
-            /*
+            // 비영속 상태 -> JPA와 아무 관련없음
             Member member = new Member();
             member.setId(1L);
             member.setName("HelloA");
 
+            // 영속 상태 -> 엔티티 매니저 안에 있는 영속성 컨텍스트를 통해서 이 멤버가 관리됨
+            // 영속 상태가 된다고 DB에 쿼리가 바로 날라가는 것은 아님. 쿼리가 날라가는 건 트랜잭션을 커밋하는 시점
+            System.out.println("=== BEFORE ===");
             em.persist(member);
-            */
+//            em.detach(member);  // detch 하면 영속성 컨텍스트에서 지움
+            System.out.println("=== AFTER ===");
 
             /*
                 JPQL
@@ -51,8 +55,8 @@ public class JpaMain {
                     .setMaxResults(5)
                     .getResultList();
 
-            for(Member member : result) {
-                System.out.println("member.getName() = " + member.getName());
+            for(Member resultMember : result) {
+                System.out.println("resultMember.getName() = " + resultMember.getName());
             }
 
             // 수정
