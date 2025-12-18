@@ -22,12 +22,22 @@ public class JpaMain {
             member.setId(1L);
             member.setName("HelloA");
 
+            Member member1 = new Member(150L, "A");
+            Member member2 = new Member(160L, "B");
+
+            em.persist(member1);
+            em.persist(member2);
+
             // 영속 상태 -> 엔티티 매니저 안에 있는 영속성 컨텍스트를 통해서 이 멤버가 관리됨
             // 영속 상태가 된다고 DB에 쿼리가 바로 날라가는 것은 아님. 쿼리가 날라가는 건 트랜잭션을 커밋하는 시점
             System.out.println("=== BEFORE ===");
             em.persist(member);
 //            em.detach(member);  // detch 하면 영속성 컨텍스트에서 지움
             System.out.println("=== AFTER ===");
+
+            Member findMember1 = em.find(Member.class, 2L);
+            Member findMember2 = em.find(Member.class, 2L);
+            System.out.println("result = " + (findMember1 == findMember2)); // true, 영속 엔티티의 동일성 보장
 
             /*
                 JPQL
